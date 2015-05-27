@@ -20,7 +20,9 @@ class TestDriverFunctions(unittest.TestCase):
 
     def test_avg_speed(self):
         points = get_driver_points_from_file(os.path.join(os.path.dirname(__file__), 'test_data.csv'))
-        self.assertEqual(count_avg_speed_on_path(points), 5)
+        self.assertEqual(count_avg_speed_on_path(points)[0], 5)  ## avg speed
+        self.assertEqual(count_avg_speed_on_path(points)[1], 20) ## distance
+        self.assertEqual(count_avg_speed_on_path(points)[2], 4)  ## time
 
 if __name__ == '__main__':
     unittest.main()
