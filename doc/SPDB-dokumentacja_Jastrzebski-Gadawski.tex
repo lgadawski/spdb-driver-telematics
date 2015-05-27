@@ -1,0 +1,43 @@
+\documentclass[]{scrartcl}
+\usepackage{amsmath}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url}
+
+%opening
+\title{Rozpoznawanie kierowców na podstawie profilu jazdy}
+\author{Jastrzębski Mateusz, Gadawski Łukasz}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Abstract if need
+\end{abstract}
+
+\section{Treść zadania}
+Realizacja projektu polega na stworzeniu rozwiązania zadania konkursowego dotyczącego rozpoznawania kierowców na podstawie podanych danych. Organizator konkursu dostarcza profile jazdy dla 3613 kierowców. Dla każdego kierowcy dane są 200 plików CSV opisujących pojedynczą podróż. Każdy taki plik zawiera współrzędne kierowcy na płaszczyźnie w każdej sekundzie jego podróży, np:
+\begin{verbatim}
+x,y
+0.0,0.0
+18.6,-11.1
+36.1,-21.9
+...
+\end{verbatim}
+
+W każdym zbiorze 200 podróży zamieszczono kilka losowych tras innych kierowców (niekoniecznie z dostarczonego zbioru).
+
+Zadaniem projektu jest identyfikacja podróży, które nie należą do danego kierowcy. Dane wynikowe powinny zostać przedstawione jako tablica wartości prawdopodobieństwa, że konkretna ścieżka należy do aktualnego kierowcy, np:
+\begin{verbatim}
+driver_trip,prob
+1_1,0.8
+1_2,0.4
+1_3,0.7
+1_4,0.9
+...
+\end{verbatim}
+
+\section{Wykorzystane algorytmy}
+\end{document}
