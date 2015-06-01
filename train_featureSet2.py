@@ -7,6 +7,7 @@ def Random_Forest(training_data, traingin_labels, test_data):
     #https://github.com/PrincipalComponent/AXA_Telematics/blob/master/Features/train_featureSet2.py
 
     regression1 = RandomForestClassifier(n_estimators=350, max_depth=6)
+    # regression1 = LogisticRegression()
     regression1.fit(training_data, traingin_labels)
 
     return regression1.predict_proba(test_data)
@@ -39,8 +40,8 @@ def make_training_set(feature_file, driver_id):
         # if it is the generate training set, import routes number 5 and 110 for each driver
         if (driver_id == 0):
             if (int(float(row[1])) == 5 or
-                int(float(row[1])) == 110  or
-                int(float(row[1])) == 151 ):
+                int(float(row[1])) == 110 or
+                int(float(row[1])) == 151):
                 training_set.append(row)
         elif (driver_id > 0):
             # it it is the test set, import all for that drivers
@@ -67,10 +68,9 @@ def Main_Regression():
     print ("finished the set of drivers that don't match")
     print (" total ",len(training_set)," routes")
 
-    data_blocks = [1,2,3,4,5,6,7,8,9,10,11,12,23,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]
-    #
-    # subset_range = [1,2,3,4,5,6,7,8,9,10]
-    # data_blocks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    data_blocks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                   12, 23, 14, 15, 16, 17, 18, 19, 20,
+                   21, 22, 23, 24, 25, 26, 27, 28]
     subset_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     # loop through this many blocks of drivers
@@ -92,7 +92,6 @@ def Main_Regression():
         print("\n There are %d different drivers \n" % len(drivers))
 
         for cnt, driver in enumerate(drivers):
-
             if (cnt % 10 == 0):
                 if (cnt != 0):
                     try:
@@ -130,9 +129,10 @@ def Main_Regression():
                         test_data4 = test_block[end_num + 1 :, :]
                         test_data2 = numpy.concatenate((test_data3, test_data4), axis=0)
 
-                    driver_id = driver
-
                     training_data = training_set[numpy.where(training_set[:, 0] != driver)[0], 2:]
+
+                    print(test_data2.shape)
+                    print(training_data.shape)
 
                     joined_training_data = numpy.concatenate((test_data2, training_data), axis=0)
 

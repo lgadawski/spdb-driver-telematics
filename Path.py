@@ -10,28 +10,8 @@ class Path:
         self.distance     = 0    # start with traveling zero distance
         self.time         = 0    # start with traveling for zero time
 
-        self.feature_loc  = []
-        self.angles       = []
-
         self.speed =    []
         self.speed_quintiles = []
-        self.acceleration = []
-        self.acceleration_quintiles = []
-        self.total_energy = 0
-        self.energy_per_distance = 0
-        self.energy_per_time = 0
-
-        self.time_in_speed = [0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0]
-
-        self.angle_distances = []  # the distances between each of the angles
-
-        self.comparison   = []
-
-        self.matched      = -10   # default to not being matched
-
-        self.is_zero      = 0  # if it is a zero distance route
-
-        self.print_flag   = 0
 
     #********************
     # This gets the distance traveled along a route
@@ -57,17 +37,6 @@ class Path:
                distance1 = 200
 
             self.speed.append(distance1)
-
-            for cnt5 in range(0,len(speed_range)-2):
-                if ( distance1 >= speed_range[cnt5] and distance1 < speed_range[cnt5+1]):
-                    self.time_in_speed[cnt5] += 1.0
-
-            if (cnt > start_num+2):
-                acceleration = self.speed[-1] - self.speed[-2]
-                self.acceleration.append(acceleration)
-
-                energy =  abs( self.speed[-1]**2 - self.speed[-2]**2)
-                self.total_energy += energy
 
             total_distance += distance1
 

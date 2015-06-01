@@ -4,10 +4,12 @@ import numpy
 import Path as p
 import time
 
-    #https://github.com/PrincipalComponent/AXA_Telematics/blob/master/Features/generate_featureSet2.py
+#https://github.com/PrincipalComponent/AXA_Telematics/blob/master/Features/generate_featureSet2.py
 
 ## this fun reads a CSV file and return header, and a list that
 ## has been converted to float
+# returns headers ("x, y") and coords list:
+# [[x1,y1], [x2,y2], ...[xn,yn]]
 def read_csv_float_with_header(file1, list1):
     fileopen = open(file1, 'rb')
     fileobject = csv.reader(fileopen)
@@ -65,25 +67,15 @@ def mainloop(driver_id, final_out_csv, drivers_path):
         file_name = os.path.join(drivers_path, str(driver_id), str(cnt) + '.csv')
 
         header, input_coords = read_csv_float_with_header(file_name, input_coords)
-        path_array = numpy.array(input_coords)
 
+        # converts input_coords list to array
+        path_array = numpy.array(input_coords)
         path.route = path_array
         path.time = len(path.route) ## 1 sec per data file
 
-        # only analyze this path if it is not within a 90 meter bound to the starting point
-        max_value = numpy.amax(path.route)
-        min_value = numpy.amin(path.route)
-        if max_value < 90 and min_value > -90:
-            path.is_zero = 1 # this is a zero length route
-            path.matched = 0 # the jitter is done differently (?)
-
         path.distance = path.get_route_distance(0, path.time)
 
-        speed_hold = path.speed
-        accel_hold = path.acceleration
-
-        path.speed_quintiles = get_quintiles(speed_hold)
-        path.acceleration_quintiles = get_quintiles(accel_hold)
+        path.speed_quintiles = get_quintiles(path.speed)
 
         list_of_lengths.append(path.distance)
 
@@ -92,7 +84,6 @@ def mainloop(driver_id, final_out_csv, drivers_path):
     for cnt1, path1 in enumerate(list_of_paths):
         path1.distance = round(path1.distance, 4)
         path1.time = round(path1.time, 4)
-        path1.is_zero = round(path1.is_zero, 4) ## ??
 
         speed1 = round(path1.speed_quintiles[0], 4)
         speed2 = round(path1.speed_quintiles[1], 4)
@@ -100,23 +91,8 @@ def mainloop(driver_id, final_out_csv, drivers_path):
         speed4 = round(path1.speed_quintiles[3], 4)
         speed5 = round(path1.speed_quintiles[4], 4)
 
-        accel1 = round(path1.acceleration_quintiles[0], 4)
-        accel2 = round(path1.acceleration_quintiles[1], 4)
-        accel3 = round(path1.acceleration_quintiles[2], 4)
-        accel4 = round(path1.acceleration_quintiles[3], 4)
-        accel5 = round(path1.acceleration_quintiles[4], 4)
-
-        time_at_speed = []
-        for i in range(0, 10):
-            time_at_speed.append(round(path1.time_in_speed[i] / (path1.time-2), 5))
-
         final_out_csv.writerow(
-            [driver_id, path1.routeid, path1.distance, path1.time, path1.is_zero,
-             speed1,speed2,speed3,speed4,speed5,
-             accel1,accel2,accel4,accel5,
-             time_at_speed[0],time_at_speed[1],time_at_speed[2],time_at_speed[3],
-             time_at_speed[4],time_at_speed[5],time_at_speed[6],time_at_speed[7],
-             time_at_speed[8],time_at_speed[9] ])
+            [driver_id, path1.routeid, path1.distance, path1.time, speed1, speed2, speed3, speed4, speed5])
 
     end_time = time.time()
     print("Elapsed: %d \n" % (end_time - start_time))
@@ -129,10 +105,7 @@ if __name__ == "__main__":
     final_out = open("featurematrix2.csv", 'wb')
     final_out_csv = csv.writer(final_out)
     final_out_csv.writerow(
-        ['driver','route','distance','time','is_jitter',
-         'speed10pct','speed30pct','speed50pct','speed70pct','speed90pct',
-         'accel10pct','accel30pct','accel70pct','accel90pct'])
-
+        ['driver','route','distance','time', 'speed10pct','speed30pct','speed50pct','speed70pct','speed90pct'])
 
     for driver_id in range(1, 3613): ##
         try:

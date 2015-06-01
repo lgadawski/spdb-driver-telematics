@@ -40,4 +40,20 @@ driver_trip,prob
 \end{verbatim}
 
 \section{Wykorzystane algorytmy}
+\subsection{Random Forest}
+Celem metod zespołowych (ang. \textit{ensemble methods}) jest połączenie prognozy estymatorów wraz z odpowiednim algorytmem uczącym, aby uzyskać możliwość oceny pojedynczej próbki w jakim stopniu jest zgodna z innymi próbkami na podstawie wspomnianych estymatorów. Do tego celu wyróżnia się dwa rodzaje metod 
+%[http://scikit-learn.org/stable/modules/ensemble.html#parameters]
+:
+\begin{itemize}
+	\item metody uśrednianiające (ang. \textit{averaging methods}) - polegające na stworzeniu estymatorów niezależnie, a następnie na uśrednieniu ich prognoz, np. Random Forest,
+	\item metody wzmacniające (ang. \textit{boosting methods}) - polegające na sekwencyjnej budowie estymatorów 
+	
+\end{itemize}
+
+Jednym z wykorzystanych algorytm jest algorytm Random Forest [cite]. W projekcie została wykorzystana implementacja w języku python z pakietu scikit-learn [cite]. Jego praktyczne wykorzystanie wiąże się z następującymi krokami:
+\begin{enumerate}
+	\item inicjalizacja modelu,
+	\item dostarczenie danych,
+	\item predykcja nowych.
+\end{enumerate}
 \end{document}

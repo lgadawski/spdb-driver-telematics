@@ -1,3 +1,4 @@
+from sklearn.ensemble.forest import RandomForestClassifier
 import unittest
 import os
 from cmath import sqrt
@@ -23,6 +24,15 @@ class TestDriverFunctions(unittest.TestCase):
         self.assertEqual(count_avg_speed_on_path(points)[0], 5)  ## avg speed
         self.assertEqual(count_avg_speed_on_path(points)[1], 20) ## distance
         self.assertEqual(count_avg_speed_on_path(points)[2], 4)  ## time
+
+    def test_RandomForest(self):
+        X = [[0, 1], [1, 1]]
+        Y = [0, 1]
+
+        regression = RandomForestClassifier(n_estimators=10)
+        regression = regression.fit(X, Y)
+        regression.predict_proba(X)
+        reg
 
 if __name__ == '__main__':
     unittest.main()
