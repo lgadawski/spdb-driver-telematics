@@ -7,6 +7,12 @@ from driver_functions import Point, get_driver_points_from_file, count_avg_speed
 
 class TestDriverFunctions(unittest.TestCase):
 
+    def test_example(self):
+        row = [1]
+        print(row[0])
+        if(len(row) > 1):
+            print(row[1])
+
     def test_count_distance(self):
         p1 = Point(0.0, 0.0)
         p2 = Point(1.0, 1.0)
@@ -32,7 +38,7 @@ class TestDriverFunctions(unittest.TestCase):
         regression = RandomForestClassifier(n_estimators=10)
         regression = regression.fit(X, Y)
         regression.predict_proba(X)
-        reg
+
 
 if __name__ == '__main__':
     unittest.main()
