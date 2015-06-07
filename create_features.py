@@ -81,10 +81,10 @@ if __name__ == "__main__":
             print("Processing driver %d" % driver_id)
             start_creating_features(driver_id, final_out_csv, drivers_path)
 
-            if (driver_id > 0 and driver_id % 200 == 0):
-                print(driver_id)
-                divide_features_file(feature_file)
-                Start_RF(driver_id)
+            # if (driver_id > 0 and driver_id % 200 == 0):
+            #     print(driver_id)
+            #     divide_features_file(feature_file)
+            #     Start_RF(driver_id)
         except IOError:
             x = 1
 
